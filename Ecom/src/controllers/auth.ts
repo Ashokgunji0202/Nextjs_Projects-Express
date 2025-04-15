@@ -45,11 +45,15 @@ export const login = async (req: Request, res: Response,next: NextFunction) => {
         
         throw new NotFoundException("User not found", ErrorCodes.USER_ALREADY_EXISTS);
     }
-    else if(!compareSync(password, user.password)) {
+    if(!compareSync(password, user.password)) {
         console.log(user.password)
-        throw new NotFoundException("User not found", ErrorCodes.USER_ALREADY_EXISTS);
+        throw new BadRequestsException("Incorrect password", ErrorCodes.USER_ALREADY_EXISTS);
     }
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret", { expiresIn: "7h" });	
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret");	
     res.json({ user, token });
 
 };
+
+export const me = async (req: Request, res: Response) => {
+    res.json(req.user);
+}
