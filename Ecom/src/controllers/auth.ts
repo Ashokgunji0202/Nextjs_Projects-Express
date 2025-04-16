@@ -10,7 +10,7 @@ import { NotFoundException } from "../exceptions/not-found";
 dotenv.config({ path: ".env" });
 
 
-export const signup = async (req: Request, res: Response, next: NextFunction) => {
+export const signup = async (req: Request, res: Response) => {
     SignUpSchema.parse(req.body);
     const { email, password, name } = req.body;
 
@@ -33,7 +33,7 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
     res.json(user);
 }
 
-export const login = async (req: Request, res: Response,next: NextFunction) => {
+export const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     let user = await prisma.user.findFirst({
