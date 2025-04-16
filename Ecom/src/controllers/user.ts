@@ -43,6 +43,6 @@ export const listAddress = async (req: Request, res: Response) => {
          throw new NotFoundException("Address not found",ErrorCodes.ADDRESS_NOT_FOUND);
     }
 }
-export const updateUser = async (req: Request, res: Response) => {
+// export const updateUser = async (req: Request, res: Response) => {
    
-}
+// }
