@@ -52,7 +52,7 @@ export const login = async (req: Request, res: Response) => {
     res.json({ user, token });
 
 };
-
+//geting the user by jwtToken
 export const me = async (req: Request, res: Response) => {
     res.json(req.user);
 }
