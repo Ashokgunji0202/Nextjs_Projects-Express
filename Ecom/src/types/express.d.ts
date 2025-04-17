@@ -1,4 +1,4 @@
-import { User } from "@prisma/client"; //.//models/user.ts
+import { User } from "@prisma/client";   //.//models/user.ts
 import { Express } from "express";
 
 
