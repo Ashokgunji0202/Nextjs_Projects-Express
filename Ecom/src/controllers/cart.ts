@@ -1,5 +1,6 @@
 import { Product } from "@prisma/client";
 import { NotFoundException } from "../exceptions/not-found";
+
 import { ErrorCodes } from "../exceptions/root";
 import { changeQuantitySchema, CreateCartSchema } from "../schema/cart";
 import { prisma } from "..";

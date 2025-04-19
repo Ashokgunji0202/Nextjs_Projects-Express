@@ -20,7 +20,25 @@ export const prisma = new PrismaClient(
     {
         log: ["query"],//information about queries
     }
-);
+).$extends({
+    result:{
+        address:{
+            formattedAddress: {
+                needs:{
+                    lineOne: true,
+                    lineTwo: true,
+                    city: true,
+                    pincode: true,
+                    country: true
+                },
+                compute:(addr)=>{
+                    return `${addr.lineOne}, ${addr.lineTwo}, ${addr.city}, ${addr.pincode}, ${addr.country}`
+                }
+            }
+
+        }
+    }
+})
 app.use(errorMiddleware);
 app.listen(PORT, () => {
     console.log("Server is running on port 3000")
