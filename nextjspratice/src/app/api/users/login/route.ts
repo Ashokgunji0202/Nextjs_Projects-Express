@@ -28,8 +28,8 @@ export async function POST(req:NextRequest,res:NextResponse):Promise<NextRespons
         const tokenData = {id:user.id,email:user.email};
 
         //create token
-        const token = jwt.sign(tokenData,process.env.TOKEN_SECRET || "secret",{expiresIn:"1h"});
-        
+        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET || "secret", {expiresIn: "1h",});
+          
         const response=NextResponse.json({success:"Login successful",user:user,token:token},{status:200});
         response.cookies.set("token",token,{
             httpOnly:true
