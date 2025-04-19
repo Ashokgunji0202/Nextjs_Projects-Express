@@ -2,7 +2,7 @@ import { NextRequest,NextResponse } from "next/server";
 import { PrismaClient} from "@prisma/client";
 import bcrypt from "bcrypt"; 
 import jwt from "jsonwebtoken";
-
+//Prisma Calling
 const prisma = new PrismaClient();
 
 export async function POST(req:NextRequest,res:NextResponse):Promise<NextResponse> {
