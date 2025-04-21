@@ -1,20 +1,17 @@
 // app/api/students/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { createStudent } from "@/actions/student/student";
+import { handleError } from "@/lib/utils/errorHandler";
+import { studentSchema } from "@/validation/student";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
     try {
       const student = await req.json();
-  
-      console.log("Received student:", student);
-  
-      const newStudent = await prisma.student.create({
-        data: {
-          ...student,
-        },
-      });
+      studentSchema.parse(student);
+      const newStudent = await createStudent(student);
       return NextResponse.json(
         {
           success: true,
@@ -24,9 +21,6 @@ export async function POST(req: NextRequest) {
         { status: 201 }
       );
     } catch (error: any) {
-      return NextResponse.json(
-        { error: "Something went wrong", message: error.message },
-        { status: 500 }
-      );
+      return handleError(error);
     }
   }
