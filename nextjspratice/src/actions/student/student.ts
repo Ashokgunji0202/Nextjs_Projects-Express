@@ -1,17 +1,11 @@
-import { BadRequestException } from "@/exceptions/BadRequestException";
-import { InternalServerException } from "@/exceptions/InternalServerException";
-import { NotFoundException } from "@/exceptions/NotFoundException";
+
+import { BadRequestException, NotFoundException } from "@/lib/utils/exception";
 import { PrismaClient } from "@prisma/client";
 
 
 const prisma = new PrismaClient();
 
 export const createStudent = async (studentData: any) => {
-  try {
-    // Example validation (You can replace this with Zod or any other validation)
-    if (!studentData.email || !studentData.name) {
-      throw new BadRequestException("Name and Email are required.");
-    }
 
     const existingStudent = await prisma.student.findUnique({
       where: { email: studentData.email },
@@ -21,32 +15,33 @@ export const createStudent = async (studentData: any) => {
       throw new BadRequestException("Email already exists.");
     }
 
-    return await prisma.student.create({
-      data: studentData,
-    });
-  } catch (error) {
-    if (error instanceof BadRequestException) {
-      throw error;
-    }
-    throw new InternalServerException("Something went wrong while creating student.");
-  }
+    const studentCreate=await prisma.student.create({data: studentData,});
+
+    return studentCreate;
+  
 };
-
-export const getStudentById = async (id: number) => {
-  try {
-    const student = await prisma.student.findUnique({
-      where: { id },
-    });
-
-    if (!student) {
-      throw new NotFoundException("Student not found.");
-    }
-
-    return student;
-  } catch (error) {
-    if (error instanceof NotFoundException) {
-      throw error;
-    }
-    throw new InternalServerException("Something went wrong while fetching the student.");
+export async function getStudentById(id: number) {
+  const student = await prisma.student.findUnique({ where: { id } });
+  if (!student) {
+    throw new NotFoundException("Student not found");
   }
-};
+  return student;
+}
+
+export async function updateStudent(id: number, studentData: any) {
+  const existingStudent = await prisma.student.findUnique({ where: { id } });
+  if (!existingStudent) {
+    throw new NotFoundException("Student not found");
+  }
+  const studentUpdated=await prisma.student.update({ where: { id }, data: studentData })
+  return studentUpdated;
+}
+
+export async function deleteStudent(id: number) {
+  const existingStudent = await prisma.student.findUnique({ where: { id } });
+  if (!existingStudent) {
+    throw new NotFoundException("Student not found");
+  }
+  const deletedStudentById = await prisma.student.delete({ where: { id } });
+  return deletedStudentById;
+}

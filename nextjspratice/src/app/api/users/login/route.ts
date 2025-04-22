@@ -2,6 +2,7 @@ import { NextRequest,NextResponse } from "next/server";
 import { PrismaClient} from "@prisma/client";
 import bcrypt from "bcrypt"; 
 import jwt from "jsonwebtoken";
+import { handleApiError } from "@/lib/utils/handleApiError";
 //Prisma Calling
 const prisma = new PrismaClient();
 
@@ -24,7 +25,7 @@ export async function POST(req:NextRequest,res:NextResponse):Promise<NextRespons
         if(!isMatch){
             return NextResponse.json({success:"false",error:"Invalid credentials"},{status:400});
         }
-        // create Token data
+        // create Token data 
         const tokenData = {id:user.id,email:user.email};
 
         //create token
@@ -38,7 +39,7 @@ export async function POST(req:NextRequest,res:NextResponse):Promise<NextRespons
         return response;
 
     }catch(error:any){
-        return NextResponse.json({error:"Something went wrong",message:error.message},{status:500});
+        return handleApiError(error);
     }
 
 }

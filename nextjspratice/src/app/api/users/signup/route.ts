@@ -2,6 +2,7 @@ import { NextRequest,NextResponse } from "next/server";
 import { PrismaClient} from "@prisma/client";
 import bcrypt from "bcrypt";   
 import { sendEmail } from "@/helpers/mailer";
+import { handleApiError } from "@/lib/utils/handleApiError";
 
 const prisma = new PrismaClient();
 
@@ -31,9 +32,8 @@ export async function POST(req:NextRequest,res:NextResponse) {
         return NextResponse.json({success:"User created successfully",user:newUser},{status:201});
         
     } catch (error:any) {  {
-        return NextResponse.json({error:"Something went wrong",message:error.message},{status:500});
-        
+        return handleApiError(error);
     }
-
+    
     }
 }
