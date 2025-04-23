@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+// adding the navbarlinks
 const navLinks = [
   {name:"Regiser",href:"/register"},
   {name:"Login",href:"/login"},
