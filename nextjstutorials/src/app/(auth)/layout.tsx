@@ -1,6 +1,12 @@
-import Link from "next/link";
+"use client";
 
-// adding the navbarlinks
+import Link from "next/link";
+import {usePathname} from "next/navigation"
+import "./global.css"
+
+import { useState } from "react";
+
+
 const navLinks = [
   {name:"Regiser",href:"/register"},
   {name:"Login",href:"/login"},
@@ -12,21 +18,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname=usePathname();
+  const[username,setUsername]=useState("");
   return (
-    <html lang="en">
-      <body>
+    
         <div>
+          <input type="text"value={username} placeholder="username" onChange={(e)=>setUsername(e.target.value)}/>
+          <br />
+          
         {navLinks.map((link)=>{
+          const isActive=pathname===link.href || (pathname.startsWith(`${link.href}`) && link.href!=='/');
           return(
-            <Link href={link.href} key={link.name}>{link.name} </Link>
+            <Link style={isActive?{color:"black",fontWeight:"bold",textDecoration:"none",marginRight:"7px"}:{color:"blue",fontWeight:"bold",textDecoration:"none",marginRight:"7px"}} href={link.href} key={link.name}>{link.name} </Link>
           )
         })}
-        </div>
-       
-        {children}
-
         
-      </body>
-    </html>
+        {children}
+        </div> 
+      
   );
 }

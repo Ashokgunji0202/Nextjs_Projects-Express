@@ -6,8 +6,7 @@ export default function Layout(
     {
     return (
         <div>
-        
-            <h1>Product Layout</h1>
+            <h1>Product Layout for layout page</h1>
             {children}
         </div>
     );

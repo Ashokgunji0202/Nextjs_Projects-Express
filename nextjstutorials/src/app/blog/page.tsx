@@ -5,7 +5,9 @@ export const metadata: Metadata = {
   description: 'This is the blog page',
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  
   return (
     <div>
       <h1>Blog page</h1>
