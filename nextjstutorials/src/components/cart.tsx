@@ -1,4 +1,4 @@
-
+// adding cart component
 export const Cart = ({children}:{children:React.ReactNode}) => {
     const cartStyle={
         padding:"100px",
