@@ -1,6 +1,6 @@
 export {};
 
-// Create a type for the roles
+// Create a type for the roles for Authe
 export type Roles = "admin" | "moderator";
 
 declare global {
