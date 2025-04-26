@@ -30,9 +30,9 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   // if user is not logged in and route is not public, redirect to sign-in
-  if (!userId && !isPublicRoute(req)) {
-    return redirectToSignIn();
-  }
+  // if (!userId && !isPublicRoute(req)) {
+  //   return redirectToSignIn();
+  // }
 
   // if(!isPublicRoute(req)){
   //   await auth.protect();
