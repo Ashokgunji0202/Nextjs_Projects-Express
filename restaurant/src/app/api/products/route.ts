@@ -14,8 +14,10 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
     try {
-        productSchema.parse(req.body)
+        
         const reqBody = await req.json();
+        console.log(reqBody);
+        productSchema.parse(reqBody)
         const product = await prisma.product.create({ data: reqBody });
         return NextResponse.json({ message: "Product created successfully", product: product }, { status: 201 });
     } catch (error: any) {

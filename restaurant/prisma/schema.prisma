@@ -19,8 +19,11 @@ model User {
   name     String
   email    String  @unique
   password String
+  CartItem CartItem[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+
 }
 
 model Product{
@@ -29,11 +32,25 @@ model Product{
   description String
   price     Decimal
   tags      String
-  quantity  Int
+  isAvailable Boolean
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  CartItem CartItem[]
  
   @@map("products")
   
- 
+}
+
+model CartItem{
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  productId Int
+  product   Product   @relation(fields: [productId], references: [id])
+  quantity  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("cart_items")
+  @@index([userId, productId])
 }

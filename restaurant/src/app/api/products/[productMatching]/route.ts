@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req:NextRequest,{params}:{params:{productMatching:string}},res:NextResponse) {
     try{
-        const { productMatching } = params;
+        const { productMatching } =params;
         const prodId = parseInt(productMatching);
         const product = await prisma.product.findUnique({ where: { id:prodId } }); 
         if (!product) {
