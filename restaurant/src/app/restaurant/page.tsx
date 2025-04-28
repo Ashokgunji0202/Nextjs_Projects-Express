@@ -1,9 +1,10 @@
+import RestaurantComponent from "@/components/Restaurant";
 
 
 export default async function AllRestaurants() {
     return (
         <div>
-            <h1>Get  All Restaurents</h1>
+            <RestaurantComponent />
         </div>
     );
 }

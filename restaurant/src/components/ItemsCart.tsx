@@ -56,7 +56,7 @@ const ItemsComponent: React.FC = () => {
         items.map((item) => (
             
           <div key={item.id} className="w-64 p-4 border rounded-lg shadow-lg bg-white">
-            {/* Static Image */}
+            
             
             <img
               src={randamImages()}
