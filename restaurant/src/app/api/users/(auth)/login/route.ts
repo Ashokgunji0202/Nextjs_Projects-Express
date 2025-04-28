@@ -17,7 +17,11 @@ export async function POST(req:Request) {
             return NextResponse.json({ error: "Invalid password" }, { status: 404 });
         }
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret");
-        return NextResponse.json({ message: "Login successful", user: user,jwt:token }, { status: 200 });
+        const response=NextResponse.json({success:"Login successful",user:user,token:token},{status:200});
+        response.cookies.set("token",token,{
+            httpOnly:true
+        });
+        return response;
     }catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

@@ -10,16 +10,18 @@ export default function SignupPage() {
   const router = useRouter();
 
   const [user, setUser] = useState({
+    name: "",
     email: "",
     password: "",
-    username: ""
+    
   });
+  console.log("User =",user)
 
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user.email.length > 0 && user.password.length > 0 && user.username.length > 0) {
+    if (user.email.length > 0 && user.password.length > 0 && user.name.length > 0) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
@@ -32,10 +34,16 @@ export default function SignupPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
+      console.log(response);
       toast.success("Signup successful!");
       router.push("/login");
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Signup failed");
+      console.log( error.response);
+
+      const res = error.response?.data;
+      const errorMessage = res?.message || "Signup failed";
+
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -51,9 +59,9 @@ export default function SignupPage() {
           className="w-full p-2 mt-1 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-600 text-black"
           type="text"
           id="username"
-          value={user.username}
+          value={user.name}
           placeholder="Enter your username"
-          onChange={(e) => setUser({ ...user, username: e.target.value })}
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
         />
 
         <label htmlFor="email">Email</label>
