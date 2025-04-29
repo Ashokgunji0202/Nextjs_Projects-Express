@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 
-// Define Item Type
+// Define Item Type for safity
 interface Item {
   id: number;
   name: string;
