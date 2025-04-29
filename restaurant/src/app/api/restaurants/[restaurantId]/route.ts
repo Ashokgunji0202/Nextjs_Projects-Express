@@ -2,17 +2,19 @@ import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function GET(req: NextRequest, { params }: { params: { restaurantId: string } }, res: NextResponse) {
+export async function GET(req: NextRequest, { params }: 
+    { params:Promise< { restaurantId: string }> }, 
+    res: NextResponse) {
     try {
-        const { restaurantId } = params;
+        const { restaurantId } =await params;
         const idNumber = parseInt(restaurantId);
-        const restaurant = await prisma.restaurant.findUnique({
+        const restaurant = await prisma.restaurant.findFirst({
             where: {
                 id: idNumber
             },
             include: {
-                products: true
-            } as any
+                items: true
+            } 
         });
         if (!restaurant) {
             return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });

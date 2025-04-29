@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
+
 // Define Item Type
 interface Item {
   id: number;
@@ -16,17 +17,29 @@ interface Item {
   image?: string; 
 }
 
-const ItemsComponent: React.FC = () => {
+interface Restaurant {
+  name: string;
+  description: string;
+}
+interface Props {
+  resId: string;
+}
+
+const ItemsComponent: React.FC<Props> = ({resId}) => {
   const [items, setItems] = useState<Item[]>([]);
+  const [restaurant, setRestaurant] = useState<Restaurant>();
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  console.log(items);
 
   useEffect(() => {
     const fetchItems = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("/api/products");
-        setItems(response.data.products); // Access the products array from the response
+        const response = await axios.get(`/api/restaurants/${resId}`);	  
+        //console.log(response.data.restaurant.items);
+        setRestaurant(response.data.restaurant);
+        setItems(response.data.restaurant.items); // Access the products array from the response
       } catch (error) {
         toast.error("Failed to fetch items");
         console.error(error);
@@ -46,7 +59,16 @@ const ItemsComponent: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-6 p-6">
+
+    <div className="flex flex-col items-side p-6">
+      {restaurant && (
+        <div className="text-left p-4 ml-5 mb-6">
+          <h1 className="text-3xl font-bold">{restaurant.name}</h1>
+          <p className="text-gray-600 mt-2">{restaurant.description}</p>
+          <h2 className="text-xl font-semibold mt-6">Items in this restaurant:</h2>
+        </div>
+      )}
+    <div className="flex flex-wrap justify-left gap-6 p-6 bg-slate-100 ">
       {loading ? (
         <div className="flex items-center justify-center">
           <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-blue-500"></div>
@@ -56,8 +78,7 @@ const ItemsComponent: React.FC = () => {
         items.map((item) => (
             
           <div key={item.id} className="w-64 p-4 border rounded-lg shadow-lg bg-white">
-            
-            
+
             <img
               src={randamImages()}
               alt={item.name}
@@ -85,6 +106,7 @@ const ItemsComponent: React.FC = () => {
           
         ))
       )}
+    </div>
     </div>
   );
 };
