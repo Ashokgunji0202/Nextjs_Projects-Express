@@ -29,14 +29,14 @@ export default clerkMiddleware(async (auth, req) => {
     // the redirect is done using NextResponse.redirect and the url is constructed using the URL API
   }
 
-  // if user is not logged in and route is not public, redirect to sign-in
-  // if (!userId && !isPublicRoute(req)) {
-  //   return redirectToSignIn();
-  // }
+  //if user is not logged in and route is not public, redirect to sign-in
+  if (!userId && !isPublicRoute(req)) {
+    return redirectToSignIn();
+  }
 
-  // if(!isPublicRoute(req)){
-  //   await auth.protect();
-  // }
+  if(!isPublicRoute(req)){
+    await auth.protect();
+  }
 });
 
 // Matcher configuration to apply middleware only to the required routes

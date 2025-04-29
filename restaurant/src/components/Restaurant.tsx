@@ -62,10 +62,11 @@ const RestaurantComponent: React.FC = () => {
       ) : (
         <>
         
+         
           {restaurants.map((restaurant) => {
             
             return (
-              <div key={restaurant.id} className={`w-64 p-4 border rounded-lg shadow-lg bg-white`}
+              <div key={restaurant.id} className={`w-68 p-4 border rounded-lg shadow-lg bg-white `}
               onClick={() => router.push(`/restaurant/${restaurant.id}`)}>
             
                 <img
@@ -80,13 +81,15 @@ const RestaurantComponent: React.FC = () => {
                 {/* View Details Button */}
                 <button
                   onClick={() => router.push(`/restaurant/${restaurant.id}`)} // Navigate to restaurant details page
-                  className="mt-4 w-full p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                  className="mt-4 w-full p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition "
                 >
                   View Details
                 </button>
               </div>
             );
           })}
+          
+
         </>
       )}
     </div>
