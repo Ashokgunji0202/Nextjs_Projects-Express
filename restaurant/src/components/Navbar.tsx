@@ -23,7 +23,7 @@ const Navbar = () => {
     <div className="bg-white shadow-md py-4 px-6 flex items-center justify-between sticky top-0" >
     
       <div className="text-2xl font-bold text-blue-600">
-        <Link href="/">My Restaurant</Link>
+        <Link href="/">FoodiesHub</Link>
       </div>
 
       
