@@ -3,12 +3,15 @@ import { ZodError } from "zod";
 import prisma from "@/lib/prisma"; 
 import { CreateCartSchema } from "@/validation/cart.valid"; 
 
-export async function POST(req: NextRequest, { params }: { params: { userId: string } }) {
+export async function POST(req: NextRequest, { params }:
+   { params:Promise< { userId: string }> }) {
   try {
     const reqBody = await req.json();
     const validatedData = CreateCartSchema.parse(reqBody);
 
-    const userId = parseInt(params.userId);
+    const { userId: userIdBody } = await params;
+
+    const userId = parseInt(userIdBody);
 
     // 1. Check if product exists
     await prisma.product.findFirstOrThrow({
@@ -34,10 +37,7 @@ export async function POST(req: NextRequest, { params }: { params: { userId: str
         },
       });
 
-      return NextResponse.json(
-        { success: true, message: "Quantity updated" },
-        { status: 200 }
-      );
+      return NextResponse.json({ success: true, message: "Quantity updated" },{ status: 200 });
     } else {
       // 4. Otherwise create new cart item
       await prisma.cartItem.create({
@@ -48,23 +48,14 @@ export async function POST(req: NextRequest, { params }: { params: { userId: str
         },
       });
 
-      return NextResponse.json(
-        { success: true, message: "Item added to cart" },
-        { status: 200 }
-      );
+      return NextResponse.json({ success: true, message: "Item added to cart" },{ status: 200 });
     }
   } catch (error: any) {
     if (error instanceof ZodError) {
-      return NextResponse.json(
-        { error: error.errors },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: error.errors },{ status: 400 });
     }
     console.error("Error adding to cart:", error.message);
-    return NextResponse.json(
-      { error: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message },{ status: 500 });
   }
 }
 
@@ -98,4 +89,22 @@ export async function GET(req: NextRequest,{params}:{params:{userId:string}},res
         return NextResponse.json({ error: error }, { status: 500 });
     }
 }
+
+export async function DELETE(req: NextRequest, { params }:
+   { params: { userId: string } }, res: NextResponse) {
+    try {
+        const cartId = parseInt(params.userId);
+        const cartItems = await prisma.cartItem.delete({
+            where: {
+                id: cartId,
+            },
+        });
+        if (!cartItems) {
+            return NextResponse.json({ error: "No items in the cart" }, { status: 404 });
+        }
+        return NextResponse.json({ message: "Cart items deleted", cartItems: cartItems }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ error: error }, { status: 500 });
+    }
+}         
 

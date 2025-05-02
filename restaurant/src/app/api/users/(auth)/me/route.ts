@@ -11,6 +11,7 @@ export async function GET(req:NextRequest,res:NextResponse) {
                 id:userId
             },
             select:{
+                id:true,
                 name:true,
                 email:true
             }

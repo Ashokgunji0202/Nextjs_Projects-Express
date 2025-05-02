@@ -1,9 +1,11 @@
+import { CartList } from "@/components/CartList";
+
 
 
 export default function CartsItems() {
     return (
         <div>
-            <h1>Cart Items</h1>
+            <CartList />
         </div>
     );  
 }

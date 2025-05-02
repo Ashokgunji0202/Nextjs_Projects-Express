@@ -19,6 +19,7 @@ const Navbar = () => {
       toast.error(error.response?.data || "Logout failed")
     }
   }
+   
   return (
     <div className="bg-white shadow-md py-4 px-6 flex items-center justify-between sticky top-0" >
     
@@ -34,7 +35,7 @@ const Navbar = () => {
         <Link href="/restaurant" className="text-gray-600 hover:text-blue-500">
           restaurant
         </Link>
-        <Link href="/cartsItems" className="text-gray-600 hover:text-blue-500">
+        <Link href="/users/cartsItems" className="text-gray-600 hover:text-blue-500">
           CartItems
         </Link>
         <Link href="/profile" className="text-gray-600 hover:text-blue-500">
