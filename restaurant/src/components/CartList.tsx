@@ -26,6 +26,50 @@ export const CartList: React.FC = () => {
     const [items, setItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+
+   const fetchCartItems = async () => {
+      try {
+        const res1 = await fetch("/api/users/me");
+        const data1 = await res1.json();
+        const userId = data1.user.id;
+  
+        if (userId) {
+          const res = await fetch(`/api/carts/${userId}`);
+          const data = await res.json();
+          setItems(data.cartItems || []);
+        }
+      } catch (error) {
+        console.error("Failed to fetch cart items:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    const handleRemoveItem = async (id: number) => {
+      try {
+        const deleteRes = await axios.delete(`/api/carts/${id}`);
+        toast.success(deleteRes.data.message);
+        setItems(items.filter((item) => item.id !== id));
+      } catch (error) {
+        toast.error("Failed to remove item from cart");
+        console.error("Failed to remove item from cart:", error);
+      }
+    };
+  
+    const clearCart = async () => {
+      try {
+        // Optional: Add a backend endpoint to clear all items
+        await axios.delete("/api/carts/user");
+        toast.success("Cart cleared");
+        setItems([]);
+      } catch (err) {
+        toast.error("Failed to clear cart");
+      }
+    };
+  
+    useEffect(() => {
+      fetchCartItems();
+    }, []);
   
    
   
