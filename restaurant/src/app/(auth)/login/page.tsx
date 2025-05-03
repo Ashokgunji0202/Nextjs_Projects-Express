@@ -84,6 +84,7 @@ export default function LoginPage() {
           placeholder="Enter your password"
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
+        
 
         <button
           className="p-2 w-full border border-gray-300 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
@@ -91,7 +92,15 @@ export default function LoginPage() {
         >
           Login
         </button>
+        
       </form>
+      <p className="mt-4 text-sm text-gray-600">
+        Forgot your password?{" "}
+        <Link href="/forgotpassword" className="text-blue-600 hover:underline mt-4">
+          Reset it here
+        </Link>
+      </p>
+      
       <div>{error && <p className="text-red-500">{error}</p>}</div>
       <p className="mt-4 text-sm text-gray-600">
         Don't have an account?{" "}
