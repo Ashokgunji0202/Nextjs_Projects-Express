@@ -13,7 +13,7 @@ interface Restaurant {
   description: string;
   address: string;
   createdAt: string;
-  image?: string; 
+  image?: string;
 }
 
 
@@ -26,7 +26,7 @@ const RestaurantComponent: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.get("/api/restaurants");
-      setRestaurants(response.data.restaurants); 
+      setRestaurants(response.data.restaurants);
     } catch (error) {
       toast.error("Failed to fetch restaurants");
       console.error(error);
@@ -36,11 +36,11 @@ const RestaurantComponent: React.FC = () => {
   };
 
   useEffect(() => {
-    
+
     fetchRestaurants();
 
   }, []);
-  
+
 
   // randomly generate an array of image URLs
   const imageUrls = [
@@ -68,11 +68,12 @@ const RestaurantComponent: React.FC = () => {
       ) : (
         <>
           {restaurants.map((restaurant) => {
-            
+
             return (
-              <div key={restaurant.id} className={`w-68 p-4 border rounded-lg shadow-lg bg-white `}
-              onClick={() => router.push(`/restaurant/${restaurant.id}`)}>
-            
+              <article
+                key={restaurant.id}
+                className="w-68 p-4 border rounded-lg shadow-lg bg-white"
+              >
                 <img
                   src={randamImages()}
                   alt={restaurant.name}
@@ -82,17 +83,17 @@ const RestaurantComponent: React.FC = () => {
                 <p className="text-sm text-gray-500 mt-2">{restaurant.description}</p>
                 <p className="text-sm text-gray-500 mt-2">{restaurant.address}</p>
 
-                
                 <button
-                  onClick={() => router.push(`/restaurant/${restaurant.id}`)} // Navigate to restaurant details page
-                  className="mt-4 w-full p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition "
+                  onClick={() => router.push(`/restaurant/${restaurant.id}`)}
+                  className="mt-4 w-full p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                  aria-label={`View details of ${restaurant.name}`}
                 >
                   View Details
                 </button>
-              </div>
+              </article>
             );
           })}
-          
+
 
         </>
       )}

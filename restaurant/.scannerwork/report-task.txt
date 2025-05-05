@@ -1,0 +1,6 @@
+projectKey=foodieHub
+serverUrl=http://localhost:9000
+serverVersion=10.5.1.90531
+dashboardUrl=http://localhost:9000/dashboard?id=foodieHub
+ceTaskId=d66fb284-b0cd-4fd9-8f52-0049415059df
+ceTaskUrl=http://localhost:9000/api/ce/task?id=d66fb284-b0cd-4fd9-8f52-0049415059df

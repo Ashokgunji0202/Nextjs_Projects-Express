@@ -16,7 +16,7 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
-
+  
   useEffect(() => {
     if (user.email.length > 0 && user.password.length > 0) {
       setButtonDisabled(false);
@@ -43,9 +43,9 @@ export default function LoginPage() {
       toast.success("Login successful!");
       router.push("users/profile");
     } catch (error: any) {
-      console.log("Login error", error.response?.data || error.message);
-      setError(error.response?.data?.error||"Login failed!");
-      toast.error(error.response?.data?.error || "Login failed!");
+      console.log("Login error", error.response?.data ?? error.message);
+      setError(error.response?.data?.error??"Login failed!");
+      toast.error(error.response?.data?.error ?? "Login failed!");
     }
     finally{
       setLoading(false);
@@ -56,13 +56,14 @@ export default function LoginPage() {
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <h1 className="text-2xl font-semibold mb-6">{loading ? "Processing" : "Login"}</h1>
       <form
-        onSubmit={onLogin}
+        onSubmit={onLogin} 
         className="flex flex-col items-center w-full max-w-sm"
       >
         <label htmlFor="email" className="self-start text-sm font-medium">
           Email
         </label>
         <input
+          disabled={buttonDisabled} 
           className="p-2 mb-4 mt-1 w-full border border-gray-300 rounded-lg focus:outline-none focus:border-gray-600 text-black"
           type="email"
           id="email"

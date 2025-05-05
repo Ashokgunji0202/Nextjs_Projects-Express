@@ -28,11 +28,11 @@ export default function HomePage() {
         <h2 className="text-3xl font-bold text-center mb-10">Popular Dishes</h2>
         <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
           {[
-            { name: "Spicy Ramen", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNkbvbFFhPeqCc1AKFVACCa8DOVmLt-gzXoQ&s" },
-            { name: "Grilled Salmon", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8LH8xTKS7bbBQiUqLGATO4tNO--DRw1R9sA&s" },
-            { name: "Veggie Pizza", img: "https://img.freepik.com/free-photo/mix-pizza-with-tomato-slices-mushroom-olive_140725-185.jpg?ga=GA1.1.58624404.1746267760&semt=ais_hybrid&w=740" },
-          ].map((dish, index) => (
-            <div key={index} className="bg-gray-100 rounded-lg overflow-hidden shadow-md">
+            {id:1, name: "Spicy Ramen", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNkbvbFFhPeqCc1AKFVACCa8DOVmLt-gzXoQ&s" },
+            { id:2,name: "Grilled Salmon", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8LH8xTKS7bbBQiUqLGATO4tNO--DRw1R9sA&s" },
+            {id:3, name: "Veggie Pizza", img: "https://img.freepik.com/free-photo/mix-pizza-with-tomato-slices-mushroom-olive_140725-185.jpg?ga=GA1.1.58624404.1746267760&semt=ais_hybrid&w=740" },
+          ].map((dish) => (
+            <div key={dish.id} className="bg-gray-100 rounded-lg overflow-hidden shadow-md">
               <img src={dish.img} alt={dish.name} className="w-full h-56 object-cover" />
               <div className="p-4">
                 <h3 className="text-xl font-semibold">{dish.name}</h3>

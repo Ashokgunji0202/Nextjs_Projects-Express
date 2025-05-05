@@ -36,7 +36,7 @@ export default function CartList()  {
         if (userId) {
           const res = await fetch(`/api/carts/${userId}`);
           const data = await res.json();
-          setItems(data.cartItems || []);
+          setItems(data.cartItems ?? []);
         }
       } catch (error) {
         console.error("Failed to fetch cart items:", error);

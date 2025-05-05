@@ -3,7 +3,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 
 
@@ -29,7 +28,7 @@ const ItemsComponent: React.FC<Props> = ({resId}) => {
   const [items, setItems] = useState<Item[]>([]);
   const [restaurant, setRestaurant] = useState<Restaurant>();
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
+  
   console.log(items);
 
   const addCartItems = async ({ productId }: { productId: number }) => {
@@ -43,7 +42,7 @@ const ItemsComponent: React.FC<Props> = ({resId}) => {
           productId,
           quantity: 1, 
         });
-        toast.success(response.data.message || "Item added to cart");
+        toast.success(response.data.message ?? "Item added to cart");
       }
     } catch (error) {
       toast.error("Adding items to cart failed");
@@ -57,7 +56,7 @@ const ItemsComponent: React.FC<Props> = ({resId}) => {
       setLoading(true);
       try {
         const response = await axios.get(`/api/restaurants/${resId}`);	  
-        //console.log(response.data.restaurant.items);
+        
         setRestaurant(response.data.restaurant);
         setItems(response.data.restaurant.items); // Access the products array from the response
       } catch (error) {
