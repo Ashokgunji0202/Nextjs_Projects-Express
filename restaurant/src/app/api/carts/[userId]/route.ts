@@ -61,12 +61,14 @@ export async function POST(req: NextRequest, { params }:
 
 
 
-export async function GET(req: NextRequest,{params}:{params:{userId:string}},res:NextResponse) {
+export async function GET(req: NextRequest,{params}:
+  {params:Promise<{userId:string}>},res:NextResponse) {
     try {
-        const userId = parseInt(params.userId);
+       const {userId} = await params;
+        const userIdNumber = parseInt(userId);
         const cartItems = await prisma.cartItem.findMany({
             where: {
-                userId: userId,
+                userId: userIdNumber,
             },
             include: {
                 product: {

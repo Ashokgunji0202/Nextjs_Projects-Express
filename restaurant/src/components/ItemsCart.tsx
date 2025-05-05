@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 
-// Define Item Type for safity
+
 interface Item {
   id: number;
   name: string;
@@ -32,6 +32,26 @@ const ItemsComponent: React.FC<Props> = ({resId}) => {
   const router = useRouter();
   console.log(items);
 
+  const addCartItems = async ({ productId }: { productId: number }) => {
+    try {
+      const res = await axios.get("/api/users/me");
+      const data = res.data;
+      const userId = data.user.id;
+      if (userId) {
+        const response = await axios.post(`/api/carts/${userId}`, {
+          userId,
+          productId,
+          quantity: 1, 
+        });
+        toast.success(response.data.message || "Item added to cart");
+      }
+    } catch (error) {
+      toast.error("Adding items to cart failed");
+      console.error("Failed to add item to cart:", error);
+    }
+  };
+  
+
   useEffect(() => {
     const fetchItems = async () => {
       setLoading(true);
@@ -50,6 +70,8 @@ const ItemsComponent: React.FC<Props> = ({resId}) => {
 
     fetchItems();
   }, []);
+
+  
 
   const imageUrls=["https://bonmasala.com/wp-content/uploads/2022/10/mutton-biriyani-recipe.jpeg","https://cdn.uengage.io/uploads/7057/image-6414-1696047806.jpg","https://www.yummyoyummy.com/wp-content/uploads/2021/09/IMG_0446-scaled.jpg","https://farm9.staticflickr.com/8610/16277229378_c4927cb1ae_o.jpg","https://www.vidhyashomecooking.com/wp-content/uploads/2019/04/DelhiVegBiryaniRecipe.jpg"];
   const lengthImages=imageUrls.length;
@@ -96,7 +118,7 @@ const ItemsComponent: React.FC<Props> = ({resId}) => {
             {/* Add to Cart button (if available) */}
             {item.isAvailable && (
               <button
-                onClick={() => router.push(`/cart?add=${item.id}`)} // Navigate to cart page
+                onClick={() => addCartItems({ productId: item.id })} // Navigate to cart page
                 className="mt-4 w-full p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
               >
                 Add to Cart
